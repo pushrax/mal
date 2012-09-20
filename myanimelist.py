@@ -56,7 +56,7 @@ class MyAnimeList:
 	def find(self, regex, status='all', username=None):
 		result = []
 		for key, val in self.list(status, username).items():
-			if re.match(regex, val['title'], re.I):
+			if re.search(regex, val['title'], re.I):
 				result.append(val)
 		return result
 
