@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>mal by j1i</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">mal</h1>
+        <p class="header">MyAnimeList.net command-line client.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/j1i/mal/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/j1i/mal/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/j1i/mal">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/j1i">j1i</a></p>
+
+
+      </header>
+      <section>
+        <h1>mal</h1>
+
+<p><code>mal</code> is a command-line client for <a href="http://myanimelist.net/">MyAnimeList.net</a>. It uses the <a href="http://myanimelist.net/modules.php?go=api">official REST API</a>, so it shouldn't break in the near future.</p>
+
+<h2>Requirements</h2>
+
+<ul>
+<li>Python 3 or possibly Python 2.7 (untested)</li>
+<li><a href="http://docs.python-requests.org/en/latest/index.html">requests</a></li>
+</ul><h2>Configuration</h2>
+
+<p>First, create <code>~/.myanimelist.ini</code> and fill it with your MAL account details:</p>
+
+<div class="highlight"><pre><span class="k">[mal]</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">your_username</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">your_password</span>
+</pre></div>
+
+<p>Yes, it's stored plain text, deal with it for now.</p>
+
+<h2>Usage</h2>
+
+<p>Currently <code>mal</code> has rather limited functionality:</p>
+
+<ul>
+<li>Search your anime list with <code>mal [regex]</code>
+</li>
+<li>Increment the number of episodes watched with <code>mal inc [regex]</code>. If there are multiple matches, it prompts you to select which one. If incrementing from 0, it sets the anime status to "watching" and sets the start date to today. If incrementing to the total episode count, it sets the anime status to "completed" and sets the end date to today.</li>
+</ul><p>More should be coming eventually.</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
