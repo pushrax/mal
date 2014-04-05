@@ -10,7 +10,7 @@ mal
 Requirements
 ------------
 
-- Python 3.1+ or possibly Python 2.7 (untested)
+- Python 3.0+
 - requests_
 
 .. _requests: http://docs.python-requests.org/en/latest/index.html
