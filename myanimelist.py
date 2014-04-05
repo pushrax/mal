@@ -9,6 +9,7 @@ class MyAnimeList:
     username = ''
     password = ''
     base_url = 'http://myanimelist.net/api'
+    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36'
 
     status_names = {
         1: 'watching',
@@ -30,7 +31,8 @@ class MyAnimeList:
         r = requests.get(
             self.base_url + '/anime/search.xml',
             params=payload,
-            auth=(self.username, self.password)
+            auth=(self.username, self.password),
+            headers={'User-Agent': self.user_agent}
         )
 
         if (r.status_code == 204):
@@ -42,8 +44,13 @@ class MyAnimeList:
     def list(self, status='all', username=None):
         if username == None:
             username = self.username
+
         payload = {'u': username, 'status': status, 'type': 'anime'}
-        r = requests.get('http://myanimelist.net/malappinfo.php', params=payload)
+        r = requests.get(
+            'http://myanimelist.net/malappinfo.php',
+            params=payload,
+            headers={'User-Agent': self.user_agent}
+        )
 
         result = dict()
         for raw_entry in ET.fromstring(r.text):
@@ -82,6 +89,7 @@ class MyAnimeList:
         r = requests.post(
             self.base_url + '/animelist/update/' + str(item_id) + '.xml',
             data=payload,
-            auth=(self.username, self.password)
+            auth=(self.username, self.password),
+            headers={'User-Agent': self.user_agent}
         )
         return r.status_code
