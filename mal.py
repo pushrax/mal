@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 
-import sys, os, signal, datetime, math
+import sys
+import os
+import signal
+import datetime
+import math
 from configparser import ConfigParser
 from myanimelist import MyAnimeList
 
 
-signal.signal(signal.SIGINT, lambda x,y: sys.exit(0))
+signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 today = datetime.date.today().strftime('%m%d%Y')
 
 
@@ -32,7 +36,7 @@ def increment(regex):
         return
 
     episode = item['episode'] + 1
-    entry = { 'episode': episode }
+    entry = {'episode': episode}
 
     print('Incrementing progress for ' + item['title'] + ' to ' + str(episode))
 
@@ -47,10 +51,10 @@ def increment(regex):
         entry['status'] = MyAnimeList.status_codes['watching']
         entry['date_start'] = today
 
-
     response = mal.update(item['id'], entry)
     if response != 200:
         print ("Failed with HTTP " + str(response))
+
 
 def find(regex):
     items = mal.find(regex)
@@ -69,7 +73,8 @@ def find(regex):
         status = MyAnimeList.status_names[item['status']].capitalize()
 
         print(str(index) + ': ' + item['title'])
-        print(' ' * padding + status + ' at ' + str(item['episode']) + '/' + str(item['total_episodes']) + ' episodes')
+        print(' ' * padding + status + ' at ' + str(item['episode']) +
+              '/' + str(item['total_episodes']) + ' episodes')
         print()
 
 

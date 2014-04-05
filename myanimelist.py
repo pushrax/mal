@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-import re, requests
+import re
+import requests
 from xml.etree import cElementTree as ET
+
 
 class MyAnimeList:
     username = ''
@@ -13,26 +15,34 @@ class MyAnimeList:
         2: 'completed',
         3: 'on hold',
         4: 'dropped',
-        6: 'plan to watch' # not a typo
+        6: 'plan to watch'  # not a typo
     }
 
-    status_codes = {v:k for k,v in status_names.items()}
+    status_codes = {v: k for k, v in status_names.items()}
 
     def __init__(self, config):
         self.username = config['username']
         self.password = config['password']
 
     def search(self, query):
-        payload = { 'q': query }
-        r = requests.get(self.base_url + '/anime/search.xml', params=payload, auth=(self.username, self.password))
+        payload = {'q': query}
+
+        r = requests.get(
+            self.base_url + '/anime/search.xml',
+            params=payload,
+            auth=(self.username, self.password)
+        )
+
         if (r.status_code == 204):
             return []
-        return [dict((attr.tag, attr.text) for attr in el) for el in ET.fromstring(r.text)]
+
+        elements = ET.fromstring(r.text)
+        return [dict((attr.tag, attr.text) for attr in el) for el in elements]
 
     def list(self, status='all', username=None):
         if username == None:
             username = self.username
-        payload = { 'u': username, 'status': status, 'type': 'anime' }
+        payload = {'u': username, 'status': status, 'type': 'anime'}
         r = requests.get('http://myanimelist.net/malappinfo.php', params=payload)
 
         result = dict()
@@ -64,8 +74,14 @@ class MyAnimeList:
         tree = ET.Element('entry')
         for key, val in entry.items():
             ET.SubElement(tree, key).text = str(val)
-        xml_item = '<?xml version="1.0" encoding="UTF-8"?>' + ET.tostring(tree).decode('utf-8')
 
-        payload = { 'data': xml_item }
-        r = requests.post(self.base_url + '/animelist/update/' + str(item_id) + '.xml', data=payload, auth=(self.username, self.password))
+        encoded = ET.tostring(tree).decode('utf-8')
+        xml_item = '<?xml version="1.0" encoding="UTF-8"?>' + encoded
+
+        payload = {'data': xml_item}
+        r = requests.post(
+            self.base_url + '/animelist/update/' + str(item_id) + '.xml',
+            data=payload,
+            auth=(self.username, self.password)
+        )
         return r.status_code
