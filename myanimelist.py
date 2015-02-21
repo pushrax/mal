@@ -52,6 +52,9 @@ class MyAnimeList:
             headers={'User-Agent': self.user_agent}
         )
 
+        if "_Incapsula_Resource" in r.text:
+            raise RuntimeError("Request blocked by Incapsula protection")
+
         result = dict()
         for raw_entry in ET.fromstring(r.text):
             entry = dict((attr.tag, attr.text) for attr in raw_entry)
